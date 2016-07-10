@@ -25,7 +25,7 @@ window['Drago'].prototype.dragoOnMouseMove = function (event) {
         this.dragObject.shiftX = this.dragObject.grabX - coords.left;
         this.dragObject.shiftY = this.dragObject.grabY - coords.top;
 
-        this.lib.startDrag(this.dragObject.avatar);
+        this.lib.startDrag(this);
     }
 
     // отобразить перенос объекта при каждом движении мыши

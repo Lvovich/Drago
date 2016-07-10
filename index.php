@@ -41,7 +41,11 @@
     <script>
         new Drago({
             draggable: '.user-form',
-            grabable: '.uf-header'
+            grabable: '.uf-header',
+
+            onDragBegin: function() {
+                alert('begin');
+            }
         });
     </script>
 </body>
