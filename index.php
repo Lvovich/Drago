@@ -37,15 +37,14 @@
         </div>
     </div>
 
+<!--    <script src="min/drago.js"></script>-->
     <script src="min/drago.min.js"></script>
     <script>
         new Drago({
             draggable: '.user-form',
             grabable: '.uf-header',
 
-            onDragBegin: function() {
-                alert('begin');
-            }
+            onDragBegin: function() {}
         });
     </script>
 </body>

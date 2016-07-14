@@ -6,7 +6,7 @@
  */
 window['Drago'].prototype.dragoOnMouseUp = function (event) {
     if (this.dragObject.avatar) {
-        this.lib.finishDrag(this);
+        this.lib.finishDrag(this.opts);
     }
 
     this.dragObject = {};

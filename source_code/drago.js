@@ -2,9 +2,9 @@ window['Drago'] = function(opts)
 {
     "use strict";
     
-    if (this === window) {
+    if (typeof this !== 'object' || this === window) {
         console.error('Drago: incorrect call without "new". Plugin Off!');
-        return null;
+        return {};
     }
 
     (function prepareParams() {
@@ -20,37 +20,31 @@ window['Drago'] = function(opts)
         }
     })();
 
-    this.draggable = document.querySelector(opts['draggable']);
-    this.grabable  = document.querySelector(opts['grabable']) || this.draggable;
-
-    if (!this.draggable || !this.lib.isParent(this.draggable, this.grabable)) {
-        console.error('Drago: parameters is invalid or "draggable" is not a parent for "grabable". Plugin Off!');
-        return null;
-    }
-
-    this.opts = opts;
-    this.dragObject = {};
-    
-    var CONTEXT = this;
-
-    /** ----------------------------------------------------------------------------------------------------------------
-     *
+    /**
+     * to exclude dangerous use of the this object, wrap it
      */
-    this.grabable.addEventListener('mousedown', function (event) {
-        return CONTEXT.dragoOnMouseDown(event);
-    }); // -END- this.grabable.addEventListener('mousedown', function (event) {})
+    return (function (_this) {
+        _this.draggable = document.querySelector(opts['draggable']);
+        _this.grabable  = document.querySelector(opts['grabable']) || _this.draggable;
 
-    /** ----------------------------------------------------------------------------------------------------------------
-     *
-     */
-    document.addEventListener('mousemove', function (event) {
-        return CONTEXT.dragoOnMouseMove(event);
-    }); // -END- document.addEventListener('mousemove', function(event) {})
+        if (!_this.draggable || !_this.lib.isParent(_this.draggable, _this.grabable)) {
+            console.error('Drago: parameters is invalid or "draggable" is not a parent for "grabable". Plugin Off!');
+            return {};
+        }
 
-    /** ----------------------------------------------------------------------------------------------------------------
-     *
-     */
-    document.addEventListener('mouseup', function (event) {
-        return CONTEXT.dragoOnMouseUp(event);
-    }); // -END- document.addEventListener('mousemove', function(event) {})
+        _this.opts = opts;
+        _this.dragObject = {};
+
+        _this.grabable.addEventListener('mousedown', function (event) {
+            return _this.dragoOnMouseDown(event);
+        });
+
+        document.addEventListener('mousemove', function (event) {
+            return _this.dragoOnMouseMove(event);
+        });
+
+        document.addEventListener('mouseup',  function (event) {
+            return _this.dragoOnMouseUp(event);
+        });
+    })(this);
 };
