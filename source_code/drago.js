@@ -21,7 +21,7 @@ window['Drago'] = function(opts)
     })();
 
     /**
-     * to exclude dangerous use of the this object, wrap it
+     * to exclude dangerous use of the this object wrap it
      */
     return (function (_this) {
         _this.draggable = document.querySelector(opts['draggable']);
