@@ -1,7 +1,7 @@
 Drago
 ============
 JS-plugin to move something.
-See /index.php to comprehension all
+See /index.php
 
 Requirements:
 -------------
