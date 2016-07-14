@@ -10,7 +10,7 @@
         .user-form {
             border: 1px solid #aaa;
             border-radius: 3px;
-            width: 300px;
+            width: 310px;
             position: fixed;
         }
         .user-form .uf-header {
@@ -31,9 +31,9 @@
 </head>
 <body>
     <div class="user-form">
-        <div class="uf-header" onselect="">Заголовок, за который можно таскать окно</div>
+        <div class="uf-header" onselect="">Grabable header for draggable block. Grab it and moove mouse</div>
         <div class="uf-body">
-            Че-то
+            Some content of draggable block
         </div>
     </div>
 
