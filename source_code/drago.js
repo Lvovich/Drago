@@ -10,13 +10,21 @@ window['Drago'] = function(opts)
     (function prepareParams() {
         opts['draggable'] = ('' + opts['draggable']) || '.eff422e211a0627fh5widcc88e75b314146';
         opts['grabable']  = ('' + opts['grabable'])  || '.eff422e211a0627fh5widcc88e75b314146';
-        
+
+        if (typeof opts['onGrab'] !== 'function') {
+            opts['onGrab'] = function() {};
+        }
+
         if (typeof opts['onDragBegin'] !== 'function') {
             opts['onDragBegin'] = function() {};
         }
         
         if (typeof opts['onDragEnd'] !== 'function') {
             opts['onDragEnd'] = function() {};
+        }
+
+        if (typeof opts['onGrabEnd'] !== 'function') {
+            opts['onGrabEnd'] = function() {};
         }
     })();
 

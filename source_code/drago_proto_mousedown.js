@@ -13,4 +13,6 @@ window['Drago'].prototype.dragoOnMouseDown = function (event) {
 
     this.dragObject.grabX = event.clientX;
     this.dragObject.grabY = event.clientY;
+
+    this.lib.onGrab(this.opts);
 };

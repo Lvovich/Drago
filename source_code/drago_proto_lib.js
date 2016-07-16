@@ -34,6 +34,7 @@ window['Drago'].prototype.lib.createAvatar = function (dragObject) {
 /** --------------------------------------------------------------------------------------------------------------------
  * 
  * @param {Object} opts - from context new Drago
+ * @returns {*}
  */
 window['Drago'].prototype.lib.startDrag = function (opts) {
     return opts['onDragBegin']();
@@ -42,9 +43,28 @@ window['Drago'].prototype.lib.startDrag = function (opts) {
 /** --------------------------------------------------------------------------------------------------------------------
  *
  * @param {Object} opts - from context new Drago
+ * @returns {*}
  */
 window['Drago'].prototype.lib.finishDrag = function (opts) {
     return opts['onDragEnd']();
+};
+
+/** --------------------------------------------------------------------------------------------------------------------
+ *
+ * @param opts
+ * @returns {*}
+ */
+window['Drago'].prototype.lib.onGrab = function (opts) {
+    return opts['onGrab']();
+};
+
+/** --------------------------------------------------------------------------------------------------------------------
+ *
+ * @param opts
+ * @returns {*}
+ */
+window['Drago'].prototype.lib.onGrabEnd = function (opts) {
+    return opts['onGrabEnd']();
 };
 
 /** --------------------------------------------------------------------------------------------------------------------

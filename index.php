@@ -44,7 +44,10 @@
             draggable: '.user-form',
             grabable: '.uf-header',
 
-            onDragBegin: function() {}
+            onGrab:      function() {},
+            onDragBegin: function() {},
+            onDragEnd:   function() {},
+            onGrabEnd:   function() {}
         });
     </script>
 </body>

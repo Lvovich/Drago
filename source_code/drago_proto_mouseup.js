@@ -9,5 +9,6 @@ window['Drago'].prototype.dragoOnMouseUp = function (event) {
         this.lib.finishDrag(this.opts);
     }
 
+    this.lib.onGrabEnd(this.opts);
     this.dragObject = {};
 };
