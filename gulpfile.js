@@ -4,51 +4,65 @@ var gulp = require('gulp'),
     closureCompiler = require('google-closure-compiler').gulp(),
     concat = require('gulp-concat');
 
-gulp.task('default', sequence('clean', 'google_min', 'build_release'));
+var paths = {
+    src  : 'source_code/',
+    dest : 'release/'
+};
 
-gulp.task('dev', ['dev']);
+var releaseName = 'drago.min.js';
 
+// ================================================== GLOBAL TASKS ================================================== //
+gulp.task(
+    'default',
+    sequence('clean', 'concat', 'min', 'copyright')
+);
+
+gulp.task(
+    'dev',
+    sequence('clean', 'concat')
+);
+
+/** --------------------------------------------------------------------------------------------------------------------
+* clean
+*/
 gulp.task('clean', function () {
-    return gulp.src(['release/*', 'min/*'], {read: false})
+    return gulp.src([paths.dest + '*'], {read: false})
         .pipe(clean());
-});
+}); // -END- clean
 
-gulp.task('google_min', function () {
+/** --------------------------------------------------------------------------------------------------------------------
+ * concat
+ */
+gulp.task('concat', function () {
     return gulp.src([
-            'source_code/drago.js',
-            'source_code/drago_proto_mousedown.js',
-            'source_code/drago_proto_mousemove.js',
-            'source_code/drago_proto_mouseup.js',
-            'source_code/drago_proto_lib.js'
-        ])
+        paths.src + '_class_*.js',
+        paths.src + 'drago.js'
+    ])
+        .pipe(concat(releaseName))
+        .pipe(gulp.dest(paths.dest));
+}); // -END- concat
+
+/** --------------------------------------------------------------------------------------------------------------------
+ * min
+ */
+gulp.task('min', function () {
+    return gulp.src([paths.dest + releaseName])
         .pipe(closureCompiler({
             compilation_level: 'ADVANCED',
             warning_level: 'VERBOSE',
             language_in: 'ECMASCRIPT5_STRICT',
             language_out: 'ECMASCRIPT5_STRICT',
-            output_wrapper: '(function(){%output%})();',
-            js_output_file: 'drago.min.js'
+            output_wrapper: '(function(){"use strict";try{%output%}catch(e){console.dir(e)}})();',
+            js_output_file: releaseName
         }))
-        .pipe(gulp.dest('min/'));
-});
+        .pipe(gulp.dest(paths.dest));
+}); // -END- min
 
-gulp.task('build_release', function () {
-    return gulp.src([
-        'source_code/copyright.js',
-        'min/drago.min.js'
-    ])
-        .pipe(concat('drago.min.js'))
-        .pipe(gulp.dest('release/'));
-});
-
-gulp.task('dev', function () {
-    return gulp.src([
-            'source_code/drago.js',
-            'source_code/drago_proto_mousedown.js',
-            'source_code/drago_proto_mousemove.js',
-            'source_code/drago_proto_mouseup.js',
-            'source_code/drago_proto_lib.js'
-        ])
-        .pipe(concat('drago.js'))
-        .pipe(gulp.dest('release/'));
-});
+/** --------------------------------------------------------------------------------------------------------------------
+ * copyright
+ */
+gulp.task('copyright', function () {
+    return gulp.src([paths.src + '__copyright.js', paths.dest + releaseName])
+        .pipe(concat(releaseName))
+        .pipe(gulp.dest(paths.dest));
+}); // -END- copyright

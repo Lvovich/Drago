@@ -1,58 +1,58 @@
-window['Drago'] = function(opts)
+/** @const {function():boolean} - Function stub. */
+var FUNC_STUB = function(){return true};
+
+/** @const {string} - local attribute appended to opts['draggable'] element, for keeping its inner ID. */
+var LA = 'a' + Math.random().toString(36).replace('.', '_') + '_drago';
+
+/** --------------------------------------------------------------------------------------------------------------------
+ * @param {Object} opts
+ */
+window['Drago'] = function dragos(opts)
 {
-    "use strict";
-    
-    if (typeof this !== 'object' || this === window) {
-        console.error('Drago: incorrect call without "new". Plugin Off!');
-        return {};
+    if (!(opts = validateOpts(opts))) {
+        console.error('Drago: was an errors while initialization. Plugin disabled.');
+        return;
     }
 
-    (function prepareParams() {
-        opts['draggable'] = ('' + opts['draggable']) || '.eff422e211a0627fh5widcc88e75b314146';
-        opts['grabable']  = ('' + opts['grabable'])  || '.eff422e211a0627fh5widcc88e75b314146';
+    // for prevent multiple creation Drago obgects on a same opts['draggable'] element.
+    if ((dragos.list = dragos.list || {}) && dragos.list[opts['draggable'][LA]]) {
+        return dragos.list[opts['draggable'][LA]];
+    }
 
-        if (typeof opts['onGrab'] !== 'function') {
-            opts['onGrab'] = function() {};
-        }
+    var eid = Math.random().toString(36).replace('.', '');
+    opts['draggable'][LA] = eid;
 
-        if (typeof opts['onDragBegin'] !== 'function') {
-            opts['onDragBegin'] = function() {};
-        }
-        
-        if (typeof opts['onDragEnd'] !== 'function') {
-            opts['onDragEnd'] = function() {};
-        }
+    dragos.list[eid] = new Drag(opts);
 
-        if (typeof opts['onGrabEnd'] !== 'function') {
-            opts['onGrabEnd'] = function() {};
-        }
-    })();
+    opts['grabable'].addEventListener('mousedown', function(event){dragos.list[eid].mouseDown(event)});
+}; // -END- constructor Drago
 
-    /**
-     * to exclude dangerous use of the this object wrap it
-     */
-    return (function (_this) {
-        _this.draggable = document.querySelector(opts['draggable']);
-        _this.grabable  = document.querySelector(opts['grabable']) || _this.draggable;
+//####################################################################################################################//
+//                                                      Helpers
+//####################################################################################################################//
 
-        if (!_this.draggable || !_this.lib.isParent(_this.draggable, _this.grabable)) {
-            console.error('Drago: parameters is invalid or "draggable" is not a parent for "grabable". Plugin Off!');
-            return {};
-        }
+/**
+ * Check initial parameters.
+ *
+ * @param {Object} opts
+ *
+ * @returns {Object} - validated & complemented parameters (full list) or null at errors.
+ */
+function validateOpts(opts)
+{
+    if (!(typeof opts['draggable'] === 'object' && opts['draggable'].parentNode)) {
+        console.warn('Drago: parameter "draggable" is invalid.');
+        return null;
+    }
 
-        _this.opts = opts;
-        _this.dragObject = {};
+    if (!(typeof opts['grabable'] === 'object' && opts['grabable'].parentNode)) {
+        opts['grabable'] = opts['draggable'];
+    }
 
-        _this.grabable.addEventListener('mousedown', function (event) {
-            return _this.dragoOnMouseDown(event);
-        });
+    opts['onGrabBegin'] = typeof opts['onGrabBegin'] === 'function' ? opts['onGrabBegin'] : FUNC_STUB;
+    opts['onGrabEnd']   = typeof opts['onGrabEnd']   === 'function' ? opts['onGrabEnd']   : FUNC_STUB;
+    opts['onDragBegin'] = typeof opts['onDragBegin'] === 'function' ? opts['onDragBegin'] : FUNC_STUB;
+    opts['onDragEnd']   = typeof opts['onDragEnd']   === 'function' ? opts['onDragEnd']   : FUNC_STUB;
 
-        document.addEventListener('mousemove', function (event) {
-            return _this.dragoOnMouseMove(event);
-        });
-
-        document.addEventListener('mouseup',  function (event) {
-            return _this.dragoOnMouseUp(event);
-        });
-    })(this);
-};
+    return opts;
+} // -END- function validateOpts()

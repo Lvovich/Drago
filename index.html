@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        .user-form {
+            border: 1px solid #aaa;
+            border-radius: 3px;
+            width: 310px;
+        }
+        .user-form .uf-header {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-color: rgba(221,221,221,.9);
+            border-bottom: 1px solid #aaa;
+            width: 100%;
+            font-size: 1.1em;
+            padding: 4px 5px 4px 35px;
+            margin-bottom: 5px;
+            cursor: move;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="user-form drag-container-1">
+        <div class="uf-header grab-area-1" onselect="">Grabable header for draggable block. Grab it and move mouse</div>
+        <div class="uf-body">
+            Some content of draggable block
+        </div>
+    </div>
+
+    <br>
+
+    <div class="user-form drag-container-2">
+        <div class="uf-header grab-area-2" onselect="">Grabable header for draggable block. Grab it and move mouse</div>
+        <div class="uf-body">
+            Some content of draggable block
+        </div>
+    </div>
+
+    <script src="release/drago.min.js"></script>
+    <script>
+        Drago({
+            draggable : document.querySelector('.drag-container-1'),
+            grabable  : document.querySelector('.grab-area-1'),
+
+            onGrabBegin: function() {},
+            onGrabEnd:   function() {},
+            onDragBegin: function() {},
+            onDragEnd:   function() {}
+        });
+        window.Drago({
+            draggable : document.querySelector('.drag-container-2'),
+            grabable  : document.querySelector('.grab-area-2'),
+
+            onGrabBegin: function() {},
+            onGrabEnd:   function() {},
+            onDragBegin: function() {},
+            onDragEnd:   function() {}
+        });
+    </script>
+</body>
+</html>
