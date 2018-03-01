@@ -9,22 +9,24 @@ var LA = 'a' + Math.random().toString(36).replace('.', '_') + '_drago';
  */
 window['Drago'] = function dragos(opts)
 {
-    if (!(opts = validateOpts(opts))) {
-        console.error('Drago: was an errors while initialization. Plugin disabled.');
-        return;
+    try {
+        if (!(opts = validateOpts(opts))) {
+            console.error('Drago: was an errors while initialization. Plugin disabled.');
+            return;
+        }
+
+        if ((dragos.list = dragos.list || {}) && dragos.list[opts['draggable'][LA]]) {
+            return; // for prevent multiple creation Drago obgects on a same opts['draggable'] element.
+        }
+
+        var eid = Math.random().toString(36);
+        opts['draggable'][LA] = eid;
+
+        dragos.list[eid] = new Drag(opts);
     }
-
-    // for prevent multiple creation Drago obgects on a same opts['draggable'] element.
-    if ((dragos.list = dragos.list || {}) && dragos.list[opts['draggable'][LA]]) {
-        return dragos.list[opts['draggable'][LA]];
+    catch (e) {
+        console.dir(e);
     }
-
-    var eid = Math.random().toString(36).replace('.', '');
-    opts['draggable'][LA] = eid;
-
-    dragos.list[eid] = new Drag(opts);
-
-    opts['grabable'].addEventListener('mousedown', function(event){dragos.list[eid].mouseDown(event)});
 }; // -END- constructor Drago
 
 //####################################################################################################################//

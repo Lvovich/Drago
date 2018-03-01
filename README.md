@@ -1,10 +1,8 @@
 Drago
 ============
-JS-plugin to move something.
-See /index.php
-
-used code & concept from https://learn.javascript.ru/drag-and-drop-objects
+JS-plugin to make html-blocks draggable.
+See /index.html
 
 Requirements:
 -------------
-any web-browser with javascript support
+Any web-browser with javascript support

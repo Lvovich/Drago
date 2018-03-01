@@ -35,7 +35,7 @@ gulp.task('clean', function () {
  */
 gulp.task('concat', function () {
     return gulp.src([
-        paths.src + '_class_*.js',
+        paths.src + '_class*.js',
         paths.src + 'drago.js'
     ])
         .pipe(concat(releaseName))
@@ -48,12 +48,13 @@ gulp.task('concat', function () {
 gulp.task('min', function () {
     return gulp.src([paths.dest + releaseName])
         .pipe(closureCompiler({
-            compilation_level: 'ADVANCED',
-            warning_level: 'VERBOSE',
-            language_in: 'ECMASCRIPT5_STRICT',
-            language_out: 'ECMASCRIPT5_STRICT',
-            output_wrapper: '(function(){"use strict";try{%output%}catch(e){console.dir(e)}})();',
-            js_output_file: releaseName
+            compilation_level : 'ADVANCED',
+            warning_level     : 'VERBOSE',
+            language_in       : 'ECMASCRIPT5_STRICT',
+            language_out      : 'ECMASCRIPT5_STRICT',
+            charset           : 'UTF-8',
+            output_wrapper    : '(function(){%output%})();',
+            js_output_file    : releaseName
         }))
         .pipe(gulp.dest(paths.dest));
 }); // -END- min
