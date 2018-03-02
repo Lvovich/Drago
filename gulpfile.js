@@ -19,7 +19,7 @@ gulp.task(
 
 gulp.task(
     'dev',
-    sequence('clean', 'concat')
+    sequence('clean', 'concat', 'copyright')
 );
 
 /** --------------------------------------------------------------------------------------------------------------------
@@ -35,8 +35,11 @@ gulp.task('clean', function () {
  */
 gulp.task('concat', function () {
     return gulp.src([
+        paths.src + '__plugin_wrapper_begin.js',
+        paths.src + '*_lib.js',
         paths.src + '_class*.js',
-        paths.src + 'drago.js'
+        paths.src + 'drago.js',
+        paths.src + '__plugin_wrapper_end.js'
     ])
         .pipe(concat(releaseName))
         .pipe(gulp.dest(paths.dest));
@@ -53,7 +56,7 @@ gulp.task('min', function () {
             language_in       : 'ECMASCRIPT5_STRICT',
             language_out      : 'ECMASCRIPT5_STRICT',
             charset           : 'UTF-8',
-            output_wrapper    : '(function(){%output%})();',
+            output_wrapper    : '%output%',
             js_output_file    : releaseName
         }))
         .pipe(gulp.dest(paths.dest));

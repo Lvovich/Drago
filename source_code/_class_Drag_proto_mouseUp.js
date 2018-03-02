@@ -3,13 +3,9 @@
  */
 Drag.prototype.mouseUp = function(event)
 {
-    if (this.movingStarted) {
-        this.fix();
-        this.movingStarted = false;
-
+    return wrapper.call(this, function()
+    {
+        this.inDragging = fix.call(this);
         this.opts['onGrabEnd'](event);
-    }
-
-    document.removeEventListener('mousemove', this.mouseMoveListener);
-    document.removeEventListener('mouseup',   this.mouseUpListener);
-}; // -END- public function mouseUp()
+    });
+};

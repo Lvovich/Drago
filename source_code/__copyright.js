@@ -1,9 +1,10 @@
 ;/**
  * @file Drago
- * @version 3.1
+ * @version 4.0
  *
  * @author Lvovich
  * @see {@link https://github.com/Lvovich/Drago|GitHub}
  *
  * @license MIT
  */
+var drago=
