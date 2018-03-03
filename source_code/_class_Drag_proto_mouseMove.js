@@ -13,8 +13,8 @@ Drag.prototype.mouseMove = function(event) {
             this.inDragging &&
             (onDragBeginResult || onDragBeginResult === undefined)
         ) {
-            this.container.style.left = this.startLeft + xm + 'px';
-            this.container.style.top  = this.startTop  + ym + 'px';
+            this.container.style.left = this.startLeft + (this.opts['onlyVert'] ? 0 : xm) + 'px';
+            this.container.style.top  = this.startTop  + (this.opts['onlyHor']  ? 0 : ym) + 'px';
 
             this.opts['onDragEnd'](event);
         }

@@ -1,5 +1,14 @@
 /**
- * @param {Object} opts
+ * @param {{
+ *      draggable   :Element,
+ *      grabable    :Element,
+ *      onlyHor     :boolean,
+ *      onlyVert    :boolean,
+ *      onGrabBegin :function(Event):boolean,
+ *      onGrabEnd   :function(Event):void,
+ *      onDragBegin :function(Event):boolean,
+ *      onDragEnd   :function(Event):void,
+ *  }} opts
  */
 var drago = function(opts)
 {

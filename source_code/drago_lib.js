@@ -39,9 +39,9 @@ function errorHandler(ex)
 /** --------------------------------------------------------------------------------------------------------------------
  * Check initial parameters.
  *
- * @param {Object} opts
+ * @param {?} opts - @see drago description.
  *
- * @returns {Object} - validated & complemented parameters (full list) or null at errors.
+ * @returns {?} - validated & complemented parameters (full list) or null on errors.
  */
 function validateOpts(opts)
 {
@@ -53,6 +53,9 @@ function validateOpts(opts)
     if (!opts['grabable'].parentElement) {
         opts['grabable'] = opts['draggable'];
     }
+
+    opts['onlyHor']  = !!opts['onlyHor'];
+    opts['onlyVert'] = !!opts['onlyVert'];
 
     opts['onGrabBegin'] = opts['onGrabBegin'] || $GL.funcStub;
     opts['onGrabEnd']   = opts['onGrabEnd']   || $GL.funcStub;
